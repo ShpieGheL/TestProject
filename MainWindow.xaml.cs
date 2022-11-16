@@ -4,17 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Data;
 using System.Data.OleDb;
-using System.Windows.Controls.DataVisualization.Charting;
 using System.IO;
 using ExcelLibrary;
 
@@ -36,7 +28,7 @@ namespace TestProject
         {
             OpenFileDialog openFileDialog = new();
             openFileDialog.Title = "Выберите файл";
-            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|Excel files (*.csv)|*.csv|All files (*.*)|*.*";
+            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|Excel files (*.xls)|*.xls|Text files (*.csv)|*.csv|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
                 path = openFileDialog.FileName;
             else
@@ -144,7 +136,22 @@ namespace TestProject
             string path = saveFileDialog();
             if (path == null)
                 return;
-            DataSetHelper.CreateWorkbook(path + ".xlsx", (DataSet)Table.DataContext);
+            Export(".xlsx");
+        }
+        private void ExXLS(object sender, RoutedEventArgs e)
+        {
+            string path = saveFileDialog();
+            if (path == null)
+                return;
+            Export(".xls");
+        }
+
+        private void Export (string extension)
+        {
+            DataSet ds = new();
+            DataTable dt = ((DataView)Table.ItemsSource).Table.Copy();
+            ds.Tables.Add(dt);
+            DataSetHelper.CreateWorkbook(path + extension, ds);
         }
     }
 }

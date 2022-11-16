@@ -20,6 +20,7 @@
             <MenuItem Header="Обзор" Click="Find"/>
             <MenuItem Header="Экспорт csv" Click="ExCSV"/>
             <MenuItem Header="Экспорт xlsx" Click="ExXLSX"/>
+            <MenuItem Header="Экспорт xlsx" Click="ExXLS"/>
         </Menu>
         <DataGrid Grid.Row="1" Name="Table" SelectionChanged="Table_SelectionChanged"/>
         <ListBox Name="list" Grid.Row="1" Grid.Column="1"/>
